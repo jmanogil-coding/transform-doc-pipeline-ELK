@@ -1,0 +1,120 @@
+curl -XPUT "localhost:9200/_ingest/pipeline/vending-pipeline" -H "content-type: application/json" -d '
+{
+  "description": "parsing vending machine data",
+  "processors": [
+    {
+      "grok": {
+        "field": "data",
+        "patterns": ["%{DATA:machine_cod} %{DATA:machine_model} %{NUMBER:product_apple} %{NUMBER:product_salad} %{NUMBER:product_juice} %{NUMBER:product_pear} %{NUMBER:location.lat} %{NUMBER:location.lon} %{DATA:tags} %{TIMESTAMP_ISO8601:last_filling} %{TIMESTAMP_ISO8601:collection_timestamp}"]
+      }
+    },
+    {
+      "remove": {
+        "field": "data"
+      }
+    },
+    {
+      "date": {
+        "field": "_ingest.timestamp",
+        "target_field": "ingest_timestamp",
+        "formats" : ["ISO8601"]
+      }
+    },
+    {
+      "date_index_name": {
+        "field": "collection_timestamp",
+        "index_name_prefix" : "vending-machine-",
+        "date_rounding": "d"
+      }
+    },
+    {
+      "convert": {
+        "field": "product_apple",
+        "type": "integer"
+      }
+    },
+    {
+      "convert": {
+        "field": "product_pear",
+        "type": "integer"
+      }
+    },
+    {
+      "convert": {
+        "field": "product_salad",
+        "type": "integer"
+      }
+    },
+    {
+      "convert": {
+        "field": "product_juice",
+        "type": "integer"
+      }
+    },
+    {
+      "uppercase": {
+        "field": "machine_cod"
+      }
+    },
+    {
+      "uppercase": {
+        "field": "machine_model"
+      }
+    },
+    {
+      "convert": {
+        "field": "location.lat",
+        "type": "float"
+      }
+    },
+    {
+      "convert": {
+        "field": "location.lon",
+        "type": "float"
+      }
+    },
+    {
+      "drop": {
+        "if": "ctx.machine_cod == \"\""
+      }
+    },
+    {
+      "script": {
+        "lang": "painless",
+        "source": "ctx.tags = ctx.tags.replace(\"[\", \"\");ctx.tags = ctx.tags.replace(\"]\", \"\");"
+      }
+    },	
+    {
+      "split": {
+        "field": "tags",
+        "separator": ","
+      }
+    },
+    {
+      "foreach": {
+        "field": "tags",
+        "processor": {
+          "trim": {
+            "field": "_ingest._value"
+          }
+        }
+      }
+    },
+    {
+      "foreach": {
+        "field": "tags",
+        "processor": {
+          "uppercase": {
+            "field": "_ingest._value"
+          }
+        }
+      }
+    },
+    {
+      "script": {
+        "lang": "painless",
+        "source": "if ((ctx.product_apple * ctx.product_pear * ctx.product_salad * ctx.product_juice) == 0) {         ctx.status = \"RED\"; } else { ctx.status = \"GREEN\";}"
+      }
+    }
+  ]
+}'

@@ -1,0 +1,11 @@
+curl -XPOST "localhost:9200/_aliases" -H "content-type: application/json" -d '
+{
+  "actions": [
+    {
+      "add": {
+        "index": "vending-machine-*",
+        "alias": "vending-machine"
+      }
+    }
+  ]
+}'

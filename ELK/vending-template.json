@@ -1,0 +1,48 @@
+curl -XPUT "localhost:9200/_template/vending-template" -H "content-type: application/json" -d '
+{
+  "index_patterns": ["vending-machine-*"],
+  "settings": {
+    "number_of_shards": 1,
+    "number_of_replicas": 0
+  },
+  "mappings": {
+    "properties": {
+      "machine_cod": {
+        "type": "keyword"
+      },
+      "machine_model": {
+        "type": "keyword"
+      },
+      "product_apple": {
+        "type": "short"
+      },
+      "product_salad": {
+        "type": "short"
+      },
+      "product_pear": {
+        "type": "short"
+      },
+      "product_juice": {
+        "type": "short"
+      },
+      "location": {
+        "type": "geo_point"
+      },
+      "tags": {
+        "type": "text"
+      },
+      "status": {
+        "type": "keyword"
+      },
+      "last_filling": {
+        "type": "date"
+      },
+      "ingest_timestamp": {
+        "type": "date"
+      },
+      "collection_timestamp": {
+        "type": "date"
+      }
+    }
+  }
+}'
