@@ -153,7 +153,7 @@ Some of these fields appeared in the parse pattern, but others are calculated by
 
 Pipelines are an extremely powerful tool in Elasticsearch. You can think of them like a data converter between your original document and the document you want. This transformation is made thanks to an available [list of processors](https://www.elastic.co/guide/en/elasticsearch/reference/current/ingest-processors.html). It is important to note that the processors are executed in the order that you define.
 
-To create the pipeline `vending-pipeline`, you must run the content of the provided file [ELK/vending-pipeline`.json](ELK/vending-pipeline.json). There is no need to explain each of the 18 processors, let us focus on the most interesting.
+To create the pipeline `vending-pipeline`, you must run the content of the provided file [ELK/vending-pipeline.json](ELK/vending-pipeline.json). There is no need to explain each of the 18 processors, let us focus on the most interesting.
 
 ### grok
 
