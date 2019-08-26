@@ -42,7 +42,7 @@ Check your present Java version because perhaps yours is different from Java 8 o
 ```
 $ java -version
 ``` 
-In case of several JMV on your system, use this command to change it and select the version 8 or 11
+In case of several JVM on your system, use this command to change it and select the version 8 or 11
 ```
 $ sudo update-alternatives --config java
 ```
