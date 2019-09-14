@@ -1,6 +1,6 @@
 # transform-doc-pipeline-ELK
 
-**Elasticsearch** gives you high flexibility to ingest data from a wide variety of sources, transform them and send them to your data cluster. What comes first to mind is **Logstash**, which supports inputs like files, databases,...even accepting requests over the Web. Moreover, an endless list of plugins allow you transform data freely. However, there may be other occasions you might use other tools. In that project we address the problem of indexing documents into a **Elasticsearch cluster** using **ingest** and **pipeline** features.
+**Elasticsearch** gives you high flexibility to ingest data from a wide variety of sources, transform them and send them to your data cluster. What comes first to mind is **Logstash**, which supports inputs like files, databases,...even accepting requests over the Web. Moreover, an endless list of plugins allow you transform data freely. However, there may be other occasions you might use other tools. In this project we address the problem of indexing documents into a **Elasticsearch cluster** using **ingest** and **pipeline** features.
 
 Imagine following scenario. Your company is engaged in the **vending machine** field and they developed time ago a full ERP which, among others, collects information about the present status of all the machines. That info is finally stored in the central database in different tables. The point is, how would you ingest those data in an Elastic cluster with the minor impact in your ERP and giving full freedom to DBA guys to transform them ?
 
